@@ -2,8 +2,8 @@
 #define RODEP_RCJ_ROBOT_LIBRARY
 #include <Arduino.h>
 #include <stdint.h>
-#include <Wire.h>
-#include <Adafruit_MotorShield.h>
+#include <AFMotor.h>
+
 /*
 A8 : BALL1
 A9 : BALL2
@@ -25,7 +25,7 @@ A15 : LINE4
 class RoDEP_rcj_robot
 {
 public:
-    RoDEP_rcj_robot(TwoWire &twi = Wire);                                 // initialize
+    RoDEP_rcj_robot();                                                    // initialize
     void update(bool ping = false);                                       //センサ情報を更新する
     void print_All_Sensors(void);                                         //センサ情報を確認する
     void set_speed(float m1, float m2, float m3, float m4);               //モーターのパワーを設定する．[Range]: -MAX_power ~ MAX_power
@@ -67,9 +67,7 @@ private:
     uint16_t ADC_CH[8] = {line_ch1, line_ch2, line_ch3, line_ch4, ball_ch1, ball_ch2, ball_ch3, ball_ch4};
 
     int8_t MOTOR_DIREC[4] = {1, 1, 1, 1}; //モーターの向き　-1 or 1のみを設定すること
-    TwoWire *i2c;
-    Adafruit_MotorShield *AFMS;
-    Adafruit_DCMotor *motors[4];
+    AF_DCMotor *motors[4];
     const float MAX_power = 1.0;
 
     uint8_t power2duty(float p) //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る

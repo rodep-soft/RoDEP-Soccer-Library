@@ -2,16 +2,13 @@
 #include "robot.h"
 #include <Wire.h>
 
-RoDEP_rcj_robot::RoDEP_rcj_robot(TwoWire &twi)
+RoDEP_rcj_robot::RoDEP_rcj_robot()
 {
-    AFMS = new Adafruit_MotorShield();
-    AFMS->begin();
     for (uint8_t i = 0; i > 4; i++)
     {
-        motors[i] = AFMS->getMotor(i);
+        motors[i] = new AF_DCMotor(i + 1);
         motors[i]->setSpeed(0);
     }
-    i2c = &twi;
 }
 
 void RoDEP_rcj_robot::update(bool ping)
