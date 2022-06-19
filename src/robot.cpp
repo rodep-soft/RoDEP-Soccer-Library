@@ -26,7 +26,7 @@ void RoDEP_rcj_robot::update(bool ping)
         uint8_t pingch[4] = {ping_ch1, ping_ch2, ping_ch3, ping_ch4};
         for (uint8_t i = 0; i < 4; i++)
         {
-            PING[i] = read_ping((ping_ch_t)pingch[i]);
+            SONAR[i] = read_ping((ping_ch_t)pingch[i]);
         }
     }
 }
@@ -36,7 +36,7 @@ void RoDEP_rcj_robot::print_All_Sensors(void)
     Serial.print("[PING]");
     for (uint8_t i = 0; i < 4; i++)
     {
-        Serial.print(PING[i]);
+        Serial.print(SONAR[i]);
         Serial.print(", ");
     }
     Serial.print("[LINE]");
