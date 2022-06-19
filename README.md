@@ -44,7 +44,7 @@ Arduino IDEおよびVSCodeにPlatformIOを導入しての開発
 #include <Arduino.h>
 #include "robot.h"
 
-RoDEP_rcj_robot robot();
+RoDEP_rcj_robot robot;
 
 void setup()
 {
@@ -59,6 +59,9 @@ void loop()
 ```
 
 # 使用基板
+
+# depandent library
+* adafruit/Adafruit Motor Shield V2 Library@^1.1.0
 
 
 ## Author
