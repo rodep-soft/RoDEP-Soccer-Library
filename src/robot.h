@@ -1,11 +1,26 @@
 #ifndef RODEP_RCJ_ROBOT_LIBRARY
 #define RODEP_RCJ_ROBOT_LIBRARY
 #include <Arduino.h>
-#include <Adafruit_MCP3008.h>
 #include <stdint.h>
 #include <Wire.h>
+#include <Adafruit_MotorShield.h>
+/*
+A8 : BALL1
+A9 : BALL2
+A10 : BALL3
+A11 : BALL4
+A12 : LINE1
+A13 : LINE2
+A14 : LINE3
+A15 : LINE4
 
-// ALT1~ALT4は未使用
+16 : PING1
+17 : PING2
+18 : PING3
+19 : PING4
+20 : SDA
+21 : SCL
+*/
 
 class RoDEP_rcj_robot
 {
@@ -29,24 +44,35 @@ private:
     } motor_ch_t;
     typedef enum
     {
-        ping_ch1 = 7,
-        ping_ch2 = 8,
-        ping_ch3 = 2,
-        ping_ch4 = 4
+        ping_ch1 = 16,
+        ping_ch2,
+        ping_ch3,
+        ping_ch4
     } ping_ch_t;
-    int8_t MOTOR_DIREC[4] = {1, 1, 1, 1};    //モーターの向き　-1 or 1のみを設定すること
-    uint8_t SCKlib, MISOlib, MOSIlib, SSlib; // for MCP3008 on SPI bus
-    uint8_t M1PWM, M2PWM, M3PWM, M4PWM;
-    Adafruit_MCP3008 *adc;
-    uint8_t PCF_ADRESS = 0b00100111; // Address for PCF8574F on I2C bus
+    typedef enum
+    {
+        line_ch1 = 66,
+        line_ch2,
+        line_ch3,
+        line_ch4
+    } line_ch_t;
+    typedef enum
+    {
+        ball_ch1 = 62,
+        ball_ch2,
+        ball_ch3,
+        ball_ch4
+    } ball_ch_t;
+
+    uint16_t ADC_CH[8] = {line_ch1, line_ch2, line_ch3, line_ch4, ball_ch1, ball_ch2, ball_ch3, ball_ch4};
+
+    int8_t MOTOR_DIREC[4] = {1, 1, 1, 1}; //モーターの向き　-1 or 1のみを設定すること
     TwoWire *i2c;
+    Adafruit_MotorShield *AFMS;
+    Adafruit_DCMotor *motors[4];
     const float MAX_power = 1.0;
 
-    uint16_t readADC(uint8_t ch);                   // MCP3008から任意のchのデータをとってくる関数
-    void readADC_AllCh(uint16_t *data);             // MCP3008のすべてのchのデータをとってくる関数
-    void set_pwm(motor_ch_t motor_ch, uint8_t val); // TB6612FNGの任意のchのPWMピンにpwmを印加する関数
-    void set_PCF8574(uint8_t io);                   // TB6612FNGのINA,INBを管理しているPCF8574に書き込む関数
-    uint8_t power2duty(float p)                     //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る
+    uint8_t power2duty(float p) //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る
     {
         return (p / MAX_power) * 255;
     }
