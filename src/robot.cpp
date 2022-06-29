@@ -4,7 +4,7 @@
 
 RoDEP_rcj_robot::RoDEP_rcj_robot()
 {
-    for (uint8_t i = 0; i > 4; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
         motors[i] = new AF_DCMotor(i + 1);
         motors[i]->setSpeed(0);
@@ -56,10 +56,6 @@ void RoDEP_rcj_robot::print_All_Sensors(void)
 
 void RoDEP_rcj_robot::set_speed(float m1, float m2, float m3, float m4)
 {
-    m1 = power2duty(m1) * MOTOR_DIREC[0];
-    m2 = power2duty(m2) * MOTOR_DIREC[1];
-    m3 = power2duty(m3) * MOTOR_DIREC[2];
-    m4 = power2duty(m4) * MOTOR_DIREC[3];
 
     if (m1 < 0)
     {
@@ -93,6 +89,12 @@ void RoDEP_rcj_robot::set_speed(float m1, float m2, float m3, float m4)
     {
         motors[3]->run(FORWARD);
     }
+
+    m1 = power2duty(m1) * MOTOR_DIREC[0];
+    m2 = power2duty(m2) * MOTOR_DIREC[1];
+    m3 = power2duty(m3) * MOTOR_DIREC[2];
+    m4 = power2duty(m4) * MOTOR_DIREC[3];
+
     motors[0]->setSpeed(abs(m1));
     motors[1]->setSpeed(abs(m2));
     motors[2]->setSpeed(abs(m3));
