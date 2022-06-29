@@ -64,6 +64,9 @@ void loop()
 
 # 使用基板
 
+# dependent library
+adafruit/Adafruit Motor Shield library@^1.0.1
+
 
 ## Author
 Shun Kayaki

@@ -32,7 +32,7 @@ public:
     void set_motor_direction(int8_t m1, int8_t m2, int8_t m3, int8_t m4); //モーターのパワーの正負を設定する． 1 or -1を代入すること [default]:1,1,1,1
     uint16_t LINE[4];                                                     //[Unit]: None [Range]: 0~1023(10bit)
     uint16_t BALL[4];                                                     //[Unit]: None [Range]: 0~1023(10bit)
-    float PING[4];                                                        //[Unit]: cm
+    float SONAR[4];                                                       //[Unit]: cm
 
 private:
     typedef enum
