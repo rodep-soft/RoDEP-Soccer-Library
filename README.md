@@ -13,6 +13,10 @@
 ## 使用部品
 Adafruit Motor Shield v2.3  
 https://akizukidenshi.com/catalog/g/gK-07748/
+
+## Dependency
+adafruit/Adafruit Motor Shield library@^1.0.1
+
 ## ピン接続
 A5 : SDA (Adafruit Shield)  
 A4 : SCL (Adafruit Shield)  
