@@ -2,16 +2,20 @@
 #include "robot.h"
 #include <Wire.h>
 
-RoDEP_rcj_robot::RoDEP_rcj_robot(TwoWire &twi)
+RoDEP_rcj_robot::RoDEP_rcj_robot()
 {
     AFMS = new Adafruit_MotorShield();
-    AFMS->begin();
-    for (uint8_t i = 0; i > 4; i++)
+    bool af_sta = AFMS->begin();
+
+    if (!af_sta)
     {
-        motors[i] = AFMS->getMotor(i);
+        Serial.println("[ERROR] Adafruit Motor driver V2 Not Found!!!");
+    }
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        motors[i] = AFMS->getMotor(i + 1);
         motors[i]->setSpeed(0);
     }
-    i2c = &twi;
 }
 
 void RoDEP_rcj_robot::update(bool ping)
@@ -59,11 +63,10 @@ void RoDEP_rcj_robot::print_All_Sensors(void)
 
 void RoDEP_rcj_robot::set_speed(float m1, float m2, float m3, float m4)
 {
-    m1 = power2duty(m1) * MOTOR_DIREC[0];
-    m2 = power2duty(m2) * MOTOR_DIREC[1];
-    m3 = power2duty(m3) * MOTOR_DIREC[2];
-    m4 = power2duty(m4) * MOTOR_DIREC[3];
-
+    m1 *= MOTOR_DIREC[0];
+    m2 *= MOTOR_DIREC[1];
+    m3 *= MOTOR_DIREC[2];
+    m4 *= MOTOR_DIREC[3];
     if (m1 < 0)
     {
         motors[0]->run(BACKWARD);
@@ -96,6 +99,12 @@ void RoDEP_rcj_robot::set_speed(float m1, float m2, float m3, float m4)
     {
         motors[3]->run(FORWARD);
     }
+
+    m1 = power2duty(m1);
+    m2 = power2duty(m2);
+    m3 = power2duty(m3);
+    m4 = power2duty(m4);
+
     motors[0]->setSpeed(abs(m1));
     motors[1]->setSpeed(abs(m2));
     motors[2]->setSpeed(abs(m3));

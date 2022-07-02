@@ -62,6 +62,7 @@ void loop()
 
 # depandent library
 * adafruit/Adafruit Motor Shield V2 Library@^1.1.0
+* SPI
 
 
 ## Author
