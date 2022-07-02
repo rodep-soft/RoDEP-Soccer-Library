@@ -70,7 +70,7 @@ private:
     AF_DCMotor *motors[4];
     const float MAX_power = 1.0;
 
-    uint8_t power2duty(float p) //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る
+    int16_t power2duty(float p) //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る
     {
         return (p / MAX_power) * 255;
     }
