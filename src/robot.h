@@ -48,7 +48,7 @@ private:
     void set_PCF8574(uint8_t io);                   // TB6612FNGのINA,INBを管理しているPCF8574に書き込む関数
     uint8_t power2duty(float p)                     //モーターのユーザーが設定する速度からdutyに変換する関数，非線形にするならここを弄る
     {
-        return (p / MAX_power) * 255;
+        return (abs(p) / MAX_power) * 255;
     }
     float read_ping(ping_ch_t ch); //超音波センサを読み込む関数
 };
