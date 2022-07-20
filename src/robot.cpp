@@ -31,7 +31,7 @@ void RoDEP_rcj_robot::update(bool ping)
         uint8_t pingch[4] = {ping_ch1, ping_ch2, ping_ch3, ping_ch4};
         for (uint8_t i = 0; i < 4; i++)
         {
-            PING[i] = read_ping((ping_ch_t)pingch[i]);
+            PING_DISTANCE[i] = read_ping((ping_ch_t)pingch[i]);
         }
     }
 }
@@ -41,7 +41,7 @@ void RoDEP_rcj_robot::print_All_Sensors(void)
     Serial.print("[PING]");
     for (uint8_t i = 0; i < 4; i++)
     {
-        Serial.print(PING[i]);
+        Serial.print(PING_DISTANCE[i]);
         Serial.print(", ");
     }
     Serial.print("[LINE]");
@@ -62,10 +62,10 @@ void RoDEP_rcj_robot::print_All_Sensors(void)
 void RoDEP_rcj_robot::set_speed(float m1, float m2, float m3, float m4)
 {
     uint8_t pcf = 0;
-    m1 *= MOTOR_DIREC[0];
-    m2 *= MOTOR_DIREC[1];
-    m3 *= MOTOR_DIREC[2];
-    m4 *= MOTOR_DIREC[3];
+    m1 *= (float)MOTOR_DIREC[0];
+    m2 *= (float)MOTOR_DIREC[1];
+    m3 *= (float)MOTOR_DIREC[2];
+    m4 *= (float)MOTOR_DIREC[3];
     if (m1 == 0)
     {
         pcf |= 0b1100;
